@@ -1,5 +1,11 @@
-**Project Description:**
+Modified script, originally written by [Gamerou](https://github.com/Gamerou).
 
+# Changes from the original script:
+- Account Email address is now a variable.
+- This script uses authentication with a purpose-fit API Key rather than using Global API Key authentication
+- Slack is used to send messages instead of discord
+---
+**Project Description:**
 The goal of this project is to create an automated solution for updating IP whitelisting rules within Cloudflare Access policies using a specially designed script. Cloudflare Access is a security framework that enforces strict access control to applications by permitting only authorized IP addresses. This project streamlines the process of updating these access rules by employing the Cloudflare API to dynamically adjust IP whitelists based on server IP changes. Additionally, the script integrates with Discord to provide instant notifications for policy updates.
 
 **Project Components:**
