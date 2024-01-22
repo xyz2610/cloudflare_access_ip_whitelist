@@ -2,27 +2,31 @@
 
 # https://github.com/Gamerou/cloudflare_access_ip_whitelist
 # Gamerou
+# modified by xyz2610
+# https://github.com/cloudflare_access_ip_whitelist
 
-# Cloudflare API-Token
+# Cloudflare API-Token, requires "Access: Apps and Policies (Edit)" Permissions
 api_token="YOUR_CLOUDFLARE_API_TOKEN"
 
-# Discord Webhook URL
-discord_webhook_url="YOUR_DISCORD_WEBHOOK_URL"
+# Slack Webhook URL
+slack_webhook_url="YOUR_SLACK_WEBHOOK_URL"
 
-# Policy details
-account_identifier="YOUR_CLOUDFLARE_ACCOUNT_IDENTIFIER"
+# Account identifier
+account_identifier="YOUR_ACCOUNT_IDENTIFIER"
+
+# Account Email
+account_email="YOUR_ACCOUNT_EMAIL"
 
 # Policy details for each application
 declare -A app_policies
 app_policies=(
-  ["APPLICATION_UUID_1"]="POLICY_UUID_1"
-  ["APPLICATION_UUID_2"]="POLICY_UUID_2"
+  ["Application_ID"]="POLICY_ID"
   # Add more application policies as needed
 )
 
 # Function to get current IPv4 and IPv6 addresses
 get_current_ip_addresses() {
-  current_ipv4=$(curl -s https://api64.ipify.org?format=text)
+  current_ipv4=$(curl -s https://api.ipify.org?format=text)
   current_ipv6=$(curl -s https://api64.ipify.org?format=text)
 }
 
@@ -56,7 +60,7 @@ for app_uuid in "${!app_policies[@]}"; do
           "ip": "'"${current_ipv4}"'"
         }
       },
-      {
+            {
         "ip": {
           "ip": "'"${current_ipv6}"'"
         }
@@ -67,18 +71,18 @@ for app_uuid in "${!app_policies[@]}"; do
   }'
 
   # Send the PUT request to update the policy
-  response=$(curl -s -X PUT -H "Content-Type: application/json" -H "X-Auth-Email: YOUR_CLOUDFLARE_EMAIL" -H "X-Auth-Key: ${api_token}" --data "${policy_data}" "${api_url}")
+  response=$(curl -s -X PUT -H "Content-Type: application/json" -H "X-Auth-Email: {$account_email}" -H "Authorization: Bearer ${api_token}" --data "${policy_data}" "${api_url}")
 
   # Check if policy update was successful
   if [ "$(echo "${response}" | jq -r '.success')" = "true" ]; then
     echo "Successfully updated Access Policy: ${policy_uuid}"
-    # Send success message to Discord
-    discord_message="Successfully updated Cloudflare Access Policy with IPv4: ${current_ipv4} and IPv6: ${current_ipv6}"
-    curl -H "Content-Type: application/json" -d "{\"content\": \"$discord_message\"}" "${discord_webhook_url}"
+    # Send success message to Slack
+    slack_message="Successfully updated Cloudflare Access Policy with IPv4: ${current_ipv4} and IPv6: ${current_ipv6}"
+    curl -H "Content-Type: application/json" -d "{"text": \"$slack_message\"}" "${slack_webhook_url}"
   else
     echo "Error updating Access Policy: ${response}"
-    # Send error message to Discord
-    discord_message="Error updating Cloudflare Access Policy. Response: ${response}"
-    curl -H "Content-Type: application/json" -d "{\"content\": \"$discord_message\"}" "${discord_webhook_url}"
+    # Send error message to Slack
+    slack_message="Error updating Cloudflare Access Policy. Response: ${response}"
+    curl -H "Content-Type: application/json" -d "{"text": \"$slack_message\"}" "${slack_webhook_url}"
   fi
 done
