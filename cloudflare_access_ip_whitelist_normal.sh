@@ -20,7 +20,7 @@ account_email="YOUR_ACCOUNT_EMAIL"
 # Policy details for each application
 declare -A app_policies
 app_policies=(
-  ["Application_ID"]="POLICY_ID"
+  ["APPLICATION_ID"]="POLICY_ID"
   # Add more application policies as needed
 )
 
