@@ -2,7 +2,7 @@ Modified script, originally written by [Gamerou](https://github.com/Gamerou).
 
 # Changes from the original script:
 - Account Email address is now a variable.
-- This script uses authentication with a purpose-fit API Key rather than using Global API Key authentication
+- This script uses authentication with a purpose-fit API Token rather than with a Global API Key.
 - Slack is used to send messages instead of discord
 ---
 **Project Description:**
