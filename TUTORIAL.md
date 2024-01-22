@@ -8,7 +8,7 @@ In this tutorial, we'll walk you through the process of updating the IP whitelis
 
 **Step 1: Obtain Your Cloudflare API Token**
 1. Log in to your Cloudflare account.
-2. Go to the "My Profile" section and generate a new API token with the required permissions for managing Access policies.
+2. Go to the "My Profile" section and generate a new API token with the required permissions for managing Access policies. (Access: Apps and Policies Edit)
 3. Note down the generated API token.
 
 **Step 2: Set Up the Script**
@@ -57,9 +57,6 @@ To automate the IP whitelist update process, you can use the `cron` scheduler on
 4. Save and exit the editor.
 
 The script will now run automatically every minute, keeping your Cloudflare Access IP whitelist up to date.
-
-**Help?:**
-If you have any questions or need assistance with this project, feel free to reach out to GitHub Help at `github-help@schandlserver.de`. **no guarantee**
 
 **Conclusion:**
 You've successfully learned how to create a Bash script to update the Cloudflare Access IP whitelist and how to automate this process using `cron`. By combining these steps, you can maintain an up-to-date whitelist of IP addresses for secure access to your Cloudflare-protected applications.
